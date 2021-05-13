@@ -4,11 +4,10 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        MandelbrotSet mandel = new MandelbrotSet(1280);
+        MandelbrotSet mandel = new MandelbrotSet(1920);
 
-        mandel.setCenter(-0.747162, -0.087584);
-        mandel.scale(10000);
-        mandel.plotMandelbrotSection();
-        //mandel.saveImage("Mandelbrot_10K.png");
+        mandel.setLimits(-0.1793,-0.1724,0.6585,0.6625);
+        mandel.plotMandelbrot();
+        mandel.showMandelbrot();
     }
 }

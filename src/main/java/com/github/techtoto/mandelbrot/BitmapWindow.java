@@ -25,25 +25,20 @@ public class BitmapWindow extends JPanel {
     BufferedImage img;
 
     /**
-     * The Constructor creates a window which displays a Bitmap.
+     * The Constructor creates an image from a given bitmap.
      *
      * @param bitmap  A 2D-Array of pixels
      * @param colored If true, the picture is created in pseudocolor. Otherwise the picture is in grayscale.
      */
     public BitmapWindow(int[][] bitmap, boolean colored) {
-        frame = new JFrame("Mandelbrot set");
-        frame.getContentPane().setBackground(Color.black);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-        frame.add(this);
-
         int bmp_width = bitmap.length;
         int bmp_height = bitmap[0].length;
-        this.img = new BufferedImage(bmp_width, bmp_height, BufferedImage.TYPE_INT_RGB);
+        img = new BufferedImage(bmp_width, bmp_height, BufferedImage.TYPE_INT_RGB);
 
         for (int x = 0; x < bmp_width; ++x) {
             for (int y = 0; y < bmp_height; ++y) {
                 if (bitmap[x][y] == 255) {
-                    this.img.setRGB(x, y, 0x000000);
+                    img.setRGB(x, y, 0x000000);
                 } else {
                     float value = bitmap[x][y] / 254.0f;
                     int col;
@@ -52,29 +47,37 @@ public class BitmapWindow extends JPanel {
                     } else {
                         col = Color.getHSBColor(1.0f, 0.0f, value).getRGB();
                     }
-                    this.img.setRGB(x, y, col);
+                    img.setRGB(x, y, col);
                 }
             }
         }
+    }
 
+    /**
+     * Opens a window to show the created image.
+     */
+    public void showPlot() {
+        frame = new JFrame("Mandelbrot set");
+        frame.getContentPane().setBackground(Color.black);
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+        frame.add(this);
         this.setPreferredSize(new Dimension(this.img.getWidth(), this.img.getHeight()));
-
-        this.frame.pack();
-
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setVisible(true);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
     /**
      * Re-draws the image if the window is re-created.
      * This method is called automatically by the window manager.
+     * I actually don't know if I need this
      */
     public void paint(Graphics g) {
         g.drawImage(this.img, 0, 0, this.img.getWidth(), this.img.getHeight(), null);
     }
 
     /**
-     * Saves the plotted image to the given filename.
+     * Saves the created image to the given filename.
      *
      * @param filename The name of the file where the picture is to be saved.
      */
