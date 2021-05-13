@@ -1,0 +1,28 @@
+name: Gradle CI
+on:
+  push:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: "!contains(github.event.commits[0].message, '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 16
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          key: "$GITHUB_SHA"
+          path: |
+            ~/builds
+            ~/build
+            ~/.gradle
+      - name: Build with Gradle
+        run: ./gradlew installDist
