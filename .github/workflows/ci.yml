@@ -25,4 +25,4 @@ jobs:
             ~/build
             ~/.gradle
       - name: Build with Gradle
-        run: ./gradlew installDist
+        run: chmod +x ./gradlew && ./gradlew installDist
