@@ -25,7 +25,7 @@ public class MandelbrotSet {
     public MandelbrotSet(int width) {
         reLimits = new double[2];
         imLimits = new double[2];
-        setLimits(- 2, 1, - 1, 1);
+        setLimits(-2, 1, -1, 1);
 
         if (width > 0) {
             this.width = width;

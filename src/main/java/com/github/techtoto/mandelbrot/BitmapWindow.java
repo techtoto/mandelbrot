@@ -30,8 +30,8 @@ public class BitmapWindow extends JPanel {
         int bmp_height = bitmap[0].length;
         img = new BufferedImage(bmp_width, bmp_height, BufferedImage.TYPE_INT_RGB);
 
-        for (int x = 0; x < bmp_width; ++ x) {
-            for (int y = 0; y < bmp_height; ++ y) {
+        for (int x = 0; x < bmp_width; ++x) {
+            for (int y = 0; y < bmp_height; ++y) {
                 if (bitmap[x][y] == 255) {
                     img.setRGB(x, y, 0x000000);
                 } else {
