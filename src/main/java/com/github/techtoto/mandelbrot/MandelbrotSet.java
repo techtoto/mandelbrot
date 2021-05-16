@@ -186,8 +186,10 @@ public class MandelbrotSet {
         int[][] bitmap = new int[width][height];
 
         for (int x = 0; x < width; x++) {
+            double currentRe = xToRe(x, width, reLimits);
             for (int y = 0; y < height; y++) {
-                bitmap[x][y] = calculatePoint(new ComplexNumber(xToRe(x, width, reLimits), yToIm(y, height, imLimits)));
+                double currentIm = yToIm(y, height, imLimits);
+                bitmap[x][y] = calculatePoint(new ComplexNumber(currentRe, currentIm));
             }
         }
 
