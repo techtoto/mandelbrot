@@ -53,8 +53,10 @@ public class MandelbrotSet {
      * @param filename The file path where the picture is to be saved
      */
     public void saveImage(String filename) {
-        if (bitmap != null) bitmap.saveImage(filename);
-        else System.out.println("No image to save!");
+        if (bitmap != null)
+            bitmap.saveImage(filename);
+        else
+            System.out.println("No image to save!");
     }
 
     public void setLimits(double reMin, double reMax, double imMin, double imMax) {
@@ -90,7 +92,8 @@ public class MandelbrotSet {
     /**
      * Moves the current plot.
      *
-     * @param axis  The axis where the Plot is to be moved. Valid characters are 'x' (real part) and 'y' (imaginary part).
+     * @param axis  The axis where the Plot is to be moved. Valid characters are 'x' (real part)
+     *              and 'y' (imaginary part).
      * @param value The value by which the plot is to be moved.
      */
     public void move(char axis, double value) {
@@ -113,7 +116,8 @@ public class MandelbrotSet {
         double deltaX = currentLimits[1] - currentCenter[0];
         double deltaY = currentLimits[3] - currentCenter[1];
 
-        setLimits(currentCenter[0] - (deltaX / factor), currentCenter[0] + (deltaX / factor), currentCenter[1] - (deltaY / factor), currentCenter[1] + (deltaY / factor));
+        setLimits(currentCenter[0] - (deltaX / factor), currentCenter[0] + (deltaX / factor),
+                currentCenter[1] - (deltaY / factor), currentCenter[1] + (deltaY / factor));
     }
 
     /**
@@ -202,7 +206,8 @@ public class MandelbrotSet {
      * to reach a defined threshold.
      *
      * @param c the complex number
-     * @return 255 if the complex number is part of the Mandelbrot set. Otherwise, the number of iterations (0 to 255) until the threshold is reached.
+     * @return 255 if the complex number is part of the Mandelbrot set. Otherwise, the number of iterations (0 to
+     * 255) until the threshold is reached.
      */
     private int calculatePoint(ComplexNumber c) {
         double threshold = 42;
@@ -212,7 +217,8 @@ public class MandelbrotSet {
         for (int i = 0; i <= 255; i++) {
             currentZ = currentZ.times(currentZ).add(c);
             currentZLength = (Math.pow(currentZ.re(), 2) + Math.pow(currentZ.im(), 2));
-            if (currentZLength > threshold) return i;
+            if (currentZLength > threshold)
+                return i;
         }
 
         return 255;
