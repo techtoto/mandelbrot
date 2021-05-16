@@ -1,5 +1,7 @@
 package com.github.techtoto.mandelbrot;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Implements a complex Number with basic arithmetic operations.
  * Code and concept adapted from "Uebung 04" from "Allgemeine Informatik I" at TU Darmstadt.
@@ -14,7 +16,8 @@ public record ComplexNumber(double re, double im) {
      * @param other the second summand.
      * @return a new ComplexNumber which equals to the addition of both complex numbers.
      */
-    public ComplexNumber add(ComplexNumber other) { // 3.1 d)
+    @NotNull
+    public ComplexNumber add(@NotNull ComplexNumber other) { // 3.1 d)
         double new_re = re + other.re;
         double new_im = im + other.im;
         return new ComplexNumber(new_re, new_im);
@@ -26,7 +29,8 @@ public record ComplexNumber(double re, double im) {
      * @param other the second factor.
      * @return a new ComplexNumber which equals to the multiplication of both complex numbers.
      */
-    public ComplexNumber times(ComplexNumber other) { // 3.1 e)
+    @NotNull
+    public ComplexNumber times(@NotNull ComplexNumber other) { // 3.1 e)
         double new_re = re * other.re - im * other.im;
         double new_im = re * other.im + im * other.re;
         return new ComplexNumber(new_re, new_im);

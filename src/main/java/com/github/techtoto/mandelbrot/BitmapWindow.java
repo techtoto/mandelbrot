@@ -1,5 +1,9 @@
 package com.github.techtoto.mandelbrot;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +20,8 @@ import java.io.IOException;
  */
 public class BitmapWindow extends JPanel {
 
-    JFrame frame;
-    BufferedImage img;
+    private final BufferedImage img;
+    private final Logger logger;
 
     /**
      * The Constructor creates an image from a given bitmap.
@@ -26,6 +30,7 @@ public class BitmapWindow extends JPanel {
      * @param colored If true, the picture is created in pseudocolor. Otherwise the picture is in grayscale.
      */
     public BitmapWindow(int[][] bitmap, boolean colored) {
+        logger = LoggerFactory.getLogger(BitmapWindow.class);
         int bmp_width = bitmap.length;
         int bmp_height = bitmap[0].length;
         img = new BufferedImage(bmp_width, bmp_height, BufferedImage.TYPE_INT_RGB);
@@ -52,7 +57,7 @@ public class BitmapWindow extends JPanel {
      * Opens a window to show the created image.
      */
     public void showPlot() {
-        frame = new JFrame("Mandelbrot set");
+        JFrame frame = new JFrame("Mandelbrot set");
         frame.getContentPane().setBackground(Color.black);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.add(this);
@@ -67,7 +72,8 @@ public class BitmapWindow extends JPanel {
      * This method is called automatically by the window manager.
      * I actually don't know if I need this
      */
-    public void paint(Graphics g) {
+    @Override
+    public void paint(@NotNull Graphics g) {
         g.drawImage(this.img, 0, 0, this.img.getWidth(), this.img.getHeight(), null);
     }
 
@@ -76,13 +82,12 @@ public class BitmapWindow extends JPanel {
      *
      * @param filename The name of the file where the picture is to be saved.
      */
-    public void saveImage(String filename) {
+    public void saveImage(@NotNull String filename) {
         File file = new File(filename);
         try {
             ImageIO.write(img, "png", file);
         } catch (IOException ex) {
-            System.err.println("Konnte das Bild nicht speichern!");
-            ex.printStackTrace();
+            logger.error("Image could not be saved!", ex);
         }
     }
 }

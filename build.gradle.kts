@@ -13,3 +13,13 @@ java {
 application {
     mainClass.set("com.github.techtoto.mandelbrot.Main")
 }
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("org.jetbrains:annotations:20.1.0")
+}

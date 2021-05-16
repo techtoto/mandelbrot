@@ -1,5 +1,9 @@
 package com.github.techtoto.mandelbrot;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Visualizes the Mandelbrot set.
  * Code and concept adapted from "Uebung 04" from "Allgemeine Informatik I" at TU Darmstadt.
@@ -14,6 +18,8 @@ public class MandelbrotSet {
     private final double[] reLimits;
     private final double[] imLimits;
 
+    private final Logger logger;
+
 
     /**
      * Initializes a Mandelbrot set plot.
@@ -23,6 +29,8 @@ public class MandelbrotSet {
      * @param width Picture width in pixels. Picture height is automatically calculated.
      */
     public MandelbrotSet(int width) {
+        logger = LoggerFactory.getLogger(MandelbrotSet.class);
+
         reLimits = new double[2];
         imLimits = new double[2];
         setLimits(-2, 1, -1, 1);
@@ -30,8 +38,8 @@ public class MandelbrotSet {
         if (width > 0) {
             this.width = width;
         } else {
-            System.out.println("Invalid picture width: " + width);
-            System.out.println("Assuming a picture width of 1920 pixels.");
+            logger.warn("Invalid picture width: {}", width);
+            logger.info("Assuming a picture width of 1920 pixels.");
             this.width = 1920;
         }
     }
@@ -52,11 +60,11 @@ public class MandelbrotSet {
      *
      * @param filename The file path where the picture is to be saved
      */
-    public void saveImage(String filename) {
+    public void saveImage(@NotNull String filename) {
         if (bitmap != null)
             bitmap.saveImage(filename);
         else
-            System.out.println("No image to save!");
+            logger.error("No image to save!");
     }
 
     public void setLimits(double reMin, double reMax, double imMin, double imMax) {
@@ -64,14 +72,14 @@ public class MandelbrotSet {
             reLimits[0] = reMin;
             reLimits[1] = reMax;
         } else {
-            System.out.println("Invalid x limits: reMin = " + reMin + " and reMax = " + reMax);
+            logger.error("Invalid x limits: reMin = {} and reMax = {}", reMin, reMax);
         }
 
         if (imMax > imMin) {
             imLimits[0] = imMin;
             imLimits[1] = imMax;
         } else {
-            System.out.println("Invalid y limits: imMin = " + imMin + " and imMax = " + imMax);
+            logger.error("Invalid y limits: imMin = {} and imMax = {}", imMin, imMax);
         }
     }
 
@@ -92,15 +100,14 @@ public class MandelbrotSet {
     /**
      * Moves the current plot.
      *
-     * @param axis  The axis where the Plot is to be moved. Valid characters are 'x' (real part)
-     *              and 'y' (imaginary part).
+     * @param axis  The axis where the Plot is to be moved. Valid characters are "im" and "re"
      * @param value The value by which the plot is to be moved.
      */
-    public void move(char axis, double value) {
+    public void move(@NotNull String axis, double value) {
         switch (axis) {
-            case 'x' -> setLimits(reLimits[0] + value, reLimits[1] + value, imLimits[0], imLimits[1]);
-            case 'y' -> setLimits(reLimits[0], reLimits[1], imLimits[0] + value, imLimits[1] + value);
-            default -> System.out.println("Invalid char!");
+            case "re" -> setLimits(reLimits[0] + value, reLimits[1] + value, imLimits[0], imLimits[1]);
+            case "im" -> setLimits(reLimits[0], reLimits[1], imLimits[0] + value, imLimits[1] + value);
+            default -> logger.error("Invalid char!");
         }
     }
 
@@ -209,7 +216,7 @@ public class MandelbrotSet {
      * @return 255 if the complex number is part of the Mandelbrot set. Otherwise, the number of iterations (0 to
      * 255) until the threshold is reached.
      */
-    private int calculatePoint(ComplexNumber c) {
+    private int calculatePoint(@NotNull ComplexNumber c) {
         double threshold = 42;
         double currentZLength;
         ComplexNumber currentZ = new ComplexNumber(0, 0);
