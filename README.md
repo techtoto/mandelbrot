@@ -7,4 +7,4 @@ The idea for this project comes from an exercise of "Allgemeine Informatik I" (g
 Since I haven't very much experience in coding, especially in Java, my code might not be the best...
 
 
-Last but not least, thanks to [NyCode](https://github.com/NyCodeGHG) for helping creating this repository and setting up Gradle. (He says Gradle is important, so it has to be true)
+Last but not least, thanks to [NyCode](https://github.com/NyCodeGHG) for helping creating this repository and setting up Gradle. (She says Gradle is important, so it has to be true)
