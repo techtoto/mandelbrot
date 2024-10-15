@@ -20,6 +20,6 @@ repositories {
 
 dependencies {
     implementation("org.slf4j:slf4j-api:2.0.16")
-    implementation("ch.qos.logback:logback-classic:1.5.10")
+    implementation("ch.qos.logback:logback-classic:1.5.11")
     implementation("org.jetbrains:annotations:23.1.0")
 }
